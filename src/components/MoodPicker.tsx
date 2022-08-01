@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import { MoodOptionType } from '../type';
 import { theme } from '../theme';
+const imageSrc = require('../assets/butterflies.png');
+
 const moodOptions: MoodOptionType[] = [
   { emoji: '🧑‍💻', description: 'studious' },
   { emoji: '🤔', description: 'pensive' },
@@ -13,13 +15,27 @@ type MoodPickerProps = {
   onSelect: (mood: MoodOptionType) => void;
 };
 export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelect }) => {
-  const [selectMood, setSelectMood] = React.useState<MoodOptionType>();
+  const [selectedMood, setSelectedMood] = React.useState<MoodOptionType>();
+
+  const [hasSelected, setHasSelected] = React.useState(false);
   const handleSelect = React.useCallback(() => {
-    if (selectMood) {
-      onSelect(selectMood);
-      setSelectMood(undefined);
+    if (selectedMood) {
+      onSelect(selectedMood);
+      setSelectedMood(undefined);
+      setHasSelected(true);
     }
-  }, [onSelect, selectMood]);
+  }, [onSelect, selectedMood]);
+  if (hasSelected) {
+    return (
+      <View style={styles.container}>
+        <Image resizeMode="contain" source={imageSrc} style={styles.image} />
+
+        <Pressable style={styles.button} onPress={() => setHasSelected(false)}>
+          <Text style={styles.buttonText}>Back</Text>
+        </Pressable>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>How are you right now?</Text>
@@ -28,11 +44,11 @@ export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelect }) => {
         {moodOptions.map(option => (
           <View>
             <Pressable
-              onPress={() => setSelectMood(option)}
+              onPress={() => setSelectedMood(option)}
               key={option.emoji}
               style={[
                 styles.moodItem,
-                option.emoji === selectMood?.emoji
+                option.emoji === selectedMood?.emoji
                   ? styles.selectedMoodItem
                   : undefined,
               ]}>
@@ -40,7 +56,7 @@ export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelect }) => {
             </Pressable>
 
             <Text style={styles.descriptionText}>
-              {selectMood?.emoji === option.emoji ? option.description : ''}
+              {selectedMood?.emoji === option.emoji ? option.description : ''}
             </Text>
           </View>
         ))}
@@ -51,6 +67,7 @@ export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelect }) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     borderWidth: 2,
@@ -58,6 +75,13 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     padding: 20,
+    justifyContent: 'space-between',
+    height: 230,
+  },
+  image: {
+    alignSelf: 'center',
+    height: 100,
+    aspectRatio: 300,
   },
   heading: {
     fontSize: 20,
