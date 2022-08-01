@@ -1,13 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useAppContext } from '../App.provider';
+import { MoodItemRow } from '../components/MoodItemRow';
 
 export const History: React.FC = () => {
   const appContext = useAppContext();
   return (
-    <View style={styles.container}>
-      <Text>{appContext.greeting}</Text>
-    </View>
+    <ScrollView>
+      {appContext.moodList.map(item => (
+        <MoodItemRow item={item} key={item.timeStamp} />
+      ))}
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({

@@ -7,16 +7,13 @@ import { MoodItemRow } from '../components/MoodItemRow';
 import { useAppContext } from '../App.provider';
 export const Home: React.FC = () => {
   const appContext = useAppContext();
-  const [moodList, setMoodList] = React.useState<MoodOptionWithTimeStamp[]>([]);
-  const handleSelectedMood = React.useCallback((mood: MoodOptionType) => {
-    setMoodList(current => [...current, { mood, timeStamp: Date.now() }]);
-  }, []);
+
   return (
     <View style={styles.container}>
-      <MoodPicker onSelect={handleSelectedMood} />
-      {moodList.map(item => (
+      <MoodPicker onSelect={appContext.handleSelectedMood} />
+      {/* {moodList.map(item => (
         <MoodItemRow item={item} />
-      ))}
+      ))} */}
     </View>
   );
 };
