@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textAlign: 'center',
     marginBottom: 20,
+    color: theme.colorWhite,
   },
   moodText: {
     fontSize: 24,
