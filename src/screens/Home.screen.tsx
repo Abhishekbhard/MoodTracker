@@ -4,7 +4,9 @@ import { MoodPicker } from '../components/MoodPicker';
 import format from 'date-fns/format';
 import { MoodOptionType, MoodOptionWithTimeStamp } from '../type';
 import { MoodItemRow } from '../components/MoodItemRow';
+import { useAppContext } from '../App.provider';
 export const Home: React.FC = () => {
+  const appContext = useAppContext();
   const [moodList, setMoodList] = React.useState<MoodOptionWithTimeStamp[]>([]);
   const handleSelectedMood = React.useCallback((mood: MoodOptionType) => {
     setMoodList(current => [...current, { mood, timeStamp: Date.now() }]);
