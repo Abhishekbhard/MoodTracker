@@ -85,11 +85,11 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 20,
-    fontWeight: 'bold',
     letterSpacing: 1,
     textAlign: 'center',
     marginBottom: 20,
     color: theme.colorWhite,
+    fontFamily: theme.fontFamilyBold,
   },
   moodText: {
     fontSize: 24,
